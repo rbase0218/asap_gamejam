@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MapManager : MonoBehaviour
+public class MapManager : GameFramework
 {
     private SpriteRenderer _render;
     
@@ -17,7 +17,7 @@ public class MapManager : MonoBehaviour
     private float _minWidth = .0f;
     private float _maxWidth = .0f;
     
-    private void Awake()
+    protected override void OnAwake()
     {
         if (!TryGetComponent(out _render))
         {
@@ -29,5 +29,23 @@ public class MapManager : MonoBehaviour
     
         _minWidth = -(scaledWidth / 2);
         _maxWidth = scaledWidth / 2;
+    }
+
+    public Vector2 GetBaseCenterPoint()
+    {
+        var basePointX = _minWidth + (BaseWidth / 2);
+        var basePointY = transform.position.y;
+    
+        return new Vector2(basePointX, basePointY);
+    }
+
+    public Vector2 GetBaseRandPoint()
+    {
+        var basePointX = _minWidth + (BaseWidth / 2);
+        
+        var minRandY = transform.position.y - ((_render.sprite.bounds.size.y * transform.localScale.y) / 2);
+        var maxRandY = transform.position.y + ((_render.sprite.bounds.size.y * transform.localScale.y) / 2);
+        var basePointY = Random.Range(minRandY, maxRandY);
+        return new Vector2(basePointX, basePointY);
     }
 }
