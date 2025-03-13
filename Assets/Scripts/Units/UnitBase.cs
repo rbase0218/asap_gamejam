@@ -1,15 +1,21 @@
 using UnityEngine;
 
-public class UnitBase : MonoBehaviour
+[RequireComponent(typeof(UnitStatus))]
+public abstract class UnitBase : GameFramework
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private UnitStatus _status;
+    
+    protected override void OnAwake()
     {
-        
+        TryGetComponent(out _status);
     }
 
-    // Update is called once per frame
-    void Update()
+    protected virtual void OnAttack(UnitBase unit)
+    {
+        unit.OnHit(_status.AttackDamage);
+    }
+
+    protected virtual void OnHit(float damage)
     {
         
     }
