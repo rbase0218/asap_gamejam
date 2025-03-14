@@ -608,7 +608,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 303998610}
-  - component: {fileID: 303998609}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -616,18 +615,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &303998609
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 303998608}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c26017fd9087b864fbd7c99f5cec6437, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &303998610
 Transform:
   m_ObjectHideFlags: 0
@@ -772,6 +759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdbdff54bbb5ee54a8a9aa9b313b5608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxEnemyCode: 1002
   unitSpawnObject: {fileID: 888429545}
 --- !u!4 &471377172
 Transform:
@@ -1300,12 +1288,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 888429544}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31f830d57d505e542821e22a91ce1ef2, type: 3}
+  m_Script: {fileID: 11500000, guid: 89d010e38c98aa840a64e8c3baeeb875, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangeSettings: []
-  repositionInterval: 5
-  debugMode: 1
+  unitLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  showDebug: 1
+  maxAttempts: 20
+  showLastAttempts: 1
+  successColor: {r: 0, g: 1, b: 0, a: 1}
+  failColor: {r: 1, g: 0, b: 0, a: 1}
+  boundaryColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  debugDuration: 3
 --- !u!1 &947387453
 GameObject:
   m_ObjectHideFlags: 0

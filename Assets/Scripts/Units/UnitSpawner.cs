@@ -6,6 +6,8 @@ public class UnitSpawner : GameFramework
     private MapManager _mapManager;
     private UnitPositionFinder _positionFinder;
 
+    [SerializeField] private int maxEnemyCode = 0;
+
     [SerializeField] private Transform unitSpawnObject;
     
     protected override void OnAwake()
@@ -29,7 +31,8 @@ public class UnitSpawner : GameFramework
     private void SpawnPlayerUnit()
     {
         // 랜덤으로 유닛을 생성한다.
-        var unit = Resources.Load("Prefabs/Unit1001");
+        var randCode = Random.Range(1001, maxEnemyCode + 1);
+        var unit = Resources.Load($"Prefabs/Unit{randCode.ToString()}");
         if (unit == null)
         {
             Debug.Log("유닛이 없습니다.");
