@@ -14,9 +14,15 @@ public class MapManager : GameFramework
 
     [field:SerializeField] public float FiredoorWidth { get; private set; }
     
+    [field:SerializeField] public float EnemySpawnWidth { get; private set; }
+    
     [field:SerializeField] public Vector2 FarSpawnPoint { get; private set; }
     [field:SerializeField] public Vector2 MidSpawnPoint { get; private set; }
     [field:SerializeField] public Vector2 NearSpawnPoint { get; private set; }
+    
+    [field:SerializeField] public Vector2 FiredoorSpawnPoint { get; private set; }
+    
+    [field:SerializeField] public Vector2 EnemySpawnPoint { get; private set; }
 
     private float _minWidth = .0f;
     private float _maxWidth = .0f;
@@ -37,6 +43,8 @@ public class MapManager : GameFramework
         FarSpawnPoint = new Vector2(_minWidth + BaseWidth, _minWidth + BaseWidth + FarWidth);
         MidSpawnPoint = new Vector2(FarSpawnPoint.y, FarSpawnPoint.y + MidWidth);
         NearSpawnPoint = new Vector2(MidSpawnPoint.y, MidSpawnPoint.y + NearWidth);
+        FiredoorSpawnPoint = new Vector2(NearSpawnPoint.y, NearSpawnPoint.y + FiredoorWidth);
+        EnemySpawnPoint = new Vector2(FiredoorSpawnPoint.y + EnemySpawnWidth, FiredoorSpawnPoint.y + EnemySpawnWidth + 1f);
     }
 
     public Vector2 GetBaseCenterPoint()
@@ -55,5 +63,15 @@ public class MapManager : GameFramework
         var maxRandY = transform.position.y + ((_render.sprite.bounds.size.y * transform.localScale.y) / 2);
         var basePointY = Random.Range(minRandY, maxRandY);
         return new Vector2(basePointX, basePointY);
+    }
+
+    public Vector2 GetEnemySpawnPoint()
+    {
+        var enemyPointX = EnemySpawnPoint.x;
+        
+        var minRandY = transform.position.y - ((_render.sprite.bounds.size.y * transform.localScale.y) / 2);
+        var maxRandY = transform.position.y + ((_render.sprite.bounds.size.y * transform.localScale.y) / 2);
+        var basePointY = Random.Range(minRandY, maxRandY);
+        return new Vector2(enemyPointX, basePointY);
     }
 }

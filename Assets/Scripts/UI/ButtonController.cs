@@ -11,6 +11,8 @@ public class ButtonController : GameFramework
     private Button _mineButton;
     private Button _firedoorButton;
     private Button _lottoButton;
+
+    private Button _enemyButton;
     
     [field:SerializeField] public float MinGoldRange { get; private set; }
     [field:SerializeField] public float MaxGoldRange { get; private set; }
@@ -28,12 +30,20 @@ public class ButtonController : GameFramework
         _mineButton = GameObject.Find("Mine Button").GetComponent<Button>();
         _firedoorButton = GameObject.Find("FireDoor Button").GetComponent<Button>();
         _lottoButton = GameObject.Find("Lotto Button").GetComponent<Button>();
+        _enemyButton = GameObject.Find("Enemy Button").GetComponent<Button>();
         
         _spawnButton.onClick.AddListener(OnClickSpawnButton);
         _upgradeButton.onClick.AddListener(OnClickUpgradeButton);
         _mineButton.onClick.AddListener(OnClickMineButton);
         _firedoorButton.onClick.AddListener(OnClickFiredoorButton);
         _lottoButton.onClick.AddListener(OnClickLottoButton);
+        
+        _enemyButton.onClick.AddListener(OnEnemySpawnButton);
+    }
+
+    public void OnEnemySpawnButton()
+    {
+        _unitSpawner.OnSpawnWithEnemy();
     }
     
     public void OnClickSpawnButton()

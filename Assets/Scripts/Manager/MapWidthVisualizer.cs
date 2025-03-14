@@ -12,6 +12,7 @@ public class MapWidthVisualizer : MonoBehaviour
     [SerializeField] private Color midColor = Color.yellow;
     [SerializeField] private Color nearColor = Color.green;
     [SerializeField] private Color firedoorColor = Color.magenta;
+    [SerializeField] private Color enemyColor = Color.cyan;
 
     private SpriteRenderer _mapRenderer;
     private float _minWidth = .0f;
@@ -107,6 +108,15 @@ public class MapWidthVisualizer : MonoBehaviour
             minWidth + mapManager.BaseWidth + mapManager.FarWidth + mapManager.MidWidth + mapManager.NearWidth + mapManager.FiredoorWidth, 
             yPos - lineHeight * 4, 
             firedoorColor,
+            "Firedoor"
+        );
+        
+        // Firedoor Width
+        DrawHorizontalLine(
+            minWidth + mapManager.BaseWidth + mapManager.FarWidth + mapManager.MidWidth + mapManager.NearWidth + mapManager.FiredoorWidth + mapManager.EnemySpawnWidth, 
+            minWidth + mapManager.BaseWidth + mapManager.FarWidth + mapManager.MidWidth + mapManager.NearWidth + mapManager.FiredoorWidth + mapManager.EnemySpawnWidth + 1f, 
+            yPos - lineHeight * 4, 
+            enemyColor,
             "Firedoor"
         );
         

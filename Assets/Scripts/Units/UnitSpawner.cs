@@ -7,8 +7,9 @@ public class UnitSpawner : GameFramework
     private UnitPositionFinder _positionFinder;
 
     [SerializeField] private int maxEnemyCode = 0;
-
+    [SerializeField] private int maxUnitCode = 0;
     [SerializeField] private Transform unitSpawnObject;
+    [SerializeField] private Transform enemySpawnObject;
     
     protected override void OnAwake()
     {
@@ -31,7 +32,7 @@ public class UnitSpawner : GameFramework
     private void SpawnPlayerUnit()
     {
         // 랜덤으로 유닛을 생성한다.
-        var randCode = Random.Range(1001, maxEnemyCode + 1);
+        var randCode = Random.Range(1001, maxUnitCode + 1);
         var unit = Resources.Load($"Prefabs/Unit{randCode.ToString()}");
         if (unit == null)
         {
@@ -97,5 +98,24 @@ public class UnitSpawner : GameFramework
         // 둘 다 없으면 기본 크기 반환
         Debug.LogWarning("유닛의 크기를 확인할 수 없습니다. 기본 크기를 사용합니다.");
         return new Vector2(1f, 1f);
+    }
+
+    public void OnSpawnWithEnemy()
+    {
+        SpawnEnemyUnit();
+    }
+    private void SpawnEnemyUnit()
+    {
+        var randCode = Random.Range(1101, maxEnemyCode + 1);
+        var unit = Resources.Load($"Prefabs/Enemy{randCode.ToString()}");
+        if (unit == null)
+        {
+            Debug.Log("유닛이 없습니다.");
+            return;
+        }
+        
+        var spawnPoint = _mapManager.GetEnemySpawnPoint();
+        var unitObj = Instantiate(unit, spawnPoint, Quaternion.identity) as GameObject;
+        unitObj.transform.parent = enemySpawnObject;
     }
 }
