@@ -13,6 +13,10 @@ public class MapManager : GameFramework
     [field:SerializeField] public float NearWidth { get; private set; }
 
     [field:SerializeField] public float FiredoorWidth { get; private set; }
+    
+    [field:SerializeField] public Vector2 FarSpawnPoint { get; private set; }
+    [field:SerializeField] public Vector2 MidSpawnPoint { get; private set; }
+    [field:SerializeField] public Vector2 NearSpawnPoint { get; private set; }
 
     private float _minWidth = .0f;
     private float _maxWidth = .0f;
@@ -29,6 +33,10 @@ public class MapManager : GameFramework
     
         _minWidth = -(scaledWidth / 2);
         _maxWidth = scaledWidth / 2;
+
+        FarSpawnPoint = new Vector2(_minWidth + BaseWidth, _minWidth + BaseWidth + FarWidth);
+        MidSpawnPoint = new Vector2(FarSpawnPoint.y, FarSpawnPoint.y + MidWidth);
+        NearSpawnPoint = new Vector2(MidSpawnPoint.y, MidSpawnPoint.y + NearWidth);
     }
 
     public Vector2 GetBaseCenterPoint()

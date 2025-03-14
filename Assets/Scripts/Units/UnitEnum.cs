@@ -14,3 +14,10 @@ public enum UnitGrade
     Unique,     // 유니크
     Legendary   // 전설
 }
+
+public enum UnitAttackRange
+{
+    Far,
+    Mid,
+    Near
+}

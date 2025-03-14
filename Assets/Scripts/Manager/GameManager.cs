@@ -13,6 +13,8 @@ public class GameManager : Singleton<GameManager>
     {
         mouseClickCount++;
         onMouseClick.Invoke(mouseClickCount);
+        
+        Debug.Log("Click Count : " + mouseClickCount);
     }
 
     public void ResetMouseClickCount()

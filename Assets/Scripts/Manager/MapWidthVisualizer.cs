@@ -17,18 +17,28 @@ public class MapWidthVisualizer : MonoBehaviour
     private float _minWidth = .0f;
     private float _maxWidth = .0f;
 
+    private void Awake()
+    {
+        InitializeMapBounds();
+    }
+
     private void Start()
+    {
+        InitializeMapBounds();
+    }
+
+    private void InitializeMapBounds()
     {
         if (mapManager == null)
         {
-            Debug.LogError("MapManager reference not set!");
+            Debug.LogWarning("MapManager reference not set!");
             return;
         }
 
         _mapRenderer = mapManager.GetComponent<SpriteRenderer>();
         if (_mapRenderer == null)
         {
-            Debug.LogError("SpriteRenderer not found on MapManager!");
+            Debug.LogWarning("SpriteRenderer not found on MapManager!");
             return;
         }
 
@@ -40,13 +50,14 @@ public class MapWidthVisualizer : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (!showVisualization || mapManager == null || !Application.isPlaying)
+        if (!showVisualization || mapManager == null)
             return;
             
         var spriteRenderer = mapManager.GetComponent<SpriteRenderer>();
-        if (spriteRenderer == null)
+        if (spriteRenderer == null || spriteRenderer.sprite == null)
             return;
             
+        // 실행 모드가 아닐 때도 맵 정보를 가져옴
         float scaledWidth = spriteRenderer.sprite.bounds.size.x * spriteRenderer.transform.localScale.x;
         float scaledHeight = spriteRenderer.sprite.bounds.size.y * spriteRenderer.transform.localScale.y;
         Vector3 mapPosition = spriteRenderer.transform.position;
@@ -92,7 +103,7 @@ public class MapWidthVisualizer : MonoBehaviour
         
         // Firedoor Width
         DrawHorizontalLine(
-            maxWidth - mapManager.FiredoorWidth, 
+            minWidth + mapManager.BaseWidth + mapManager.FarWidth + mapManager.MidWidth + mapManager.NearWidth, 
             maxWidth, 
             yPos - lineHeight * 4, 
             firedoorColor,
@@ -134,4 +145,17 @@ public class MapWidthVisualizer : MonoBehaviour
         UnityEditor.Handles.Label(labelPos, $"{label}: {width:F2}");
 #endif
     }
+
+#if UNITY_EDITOR
+    // OnValidate는 Inspector에서 값이 변경될 때마다 호출됩니다
+    private void OnValidate()
+    {
+        // Inspector에서 값이 변경될 때 시각적 업데이트를 위해
+        if (mapManager != null)
+        {
+            UnityEditor.EditorApplication.QueuePlayerLoopUpdate();
+            UnityEditor.SceneView.RepaintAll();
+        }
+    }
+#endif
 }

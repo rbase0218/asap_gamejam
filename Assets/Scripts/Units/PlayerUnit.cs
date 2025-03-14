@@ -8,6 +8,8 @@ public class PlayerUnit : UnitBase
     
     [SerializeField] private float _stoppingDistance = 0.1f;
     private bool _isMoving = false;
+
+    public UnitAttackRange attackRange;
     
     protected override void OnAwake()
     {
