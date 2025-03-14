@@ -23,6 +23,11 @@ public class UnitSpawner : GameFramework
             _positionFinder = gameObject.AddComponent<UnitPositionFinder>();
             Debug.Log("UnitPositionFinder 컴포넌트가 자동으로 추가되었습니다.");
         }
+        
+        GameManager.Instance.onMouseClick.AddListener((x) =>
+        {
+            GameManager.Instance.StartRound(OnSpawnWithEnemy);
+        });
     }
     
     public void OnSpawn()

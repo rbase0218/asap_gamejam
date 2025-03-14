@@ -1427,6 +1427,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 743060582}
   m_CullTransparentMesh: 1
+--- !u!1 &783926600
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 783926602}
+  - component: {fileID: 783926601}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &783926601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 783926600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ab2c841ecfd8ba4e833532ff66a84e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseClickCount: 0
+  onMouseClick:
+    m_PersistentCalls:
+      m_Calls: []
+  money: 0
+  securityGrade: 0
+  isFiredoorOpen: 0
+  roundStartCount: 3
+  isStartRound: 0
+--- !u!4 &783926602
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 783926600}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &888429544
 GameObject:
   m_ObjectHideFlags: 0
@@ -2494,7 +2547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7b0c69bd5a88614cad7925b32f254ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <MaxHealth>k__BackingField: 500
+  <MaxHealth>k__BackingField: 5
   <CurrentHealth>k__BackingField: 0
   <DefensePoint>k__BackingField: 0
   <AttackDamage>k__BackingField: 0
@@ -2905,3 +2958,4 @@ SceneRoots:
   - {fileID: 1051712109}
   - {fileID: 303998610}
   - {fileID: 471377172}
+  - {fileID: 783926602}

@@ -248,8 +248,6 @@ public class EnemyUnit : UnitBase
     // 사망 처리
     private void Die()
     {
-        // 사망 효과 재생, 점수 증가 등의 로직 추가
-        
         // 오브젝트 제거
         Destroy(gameObject);
     }

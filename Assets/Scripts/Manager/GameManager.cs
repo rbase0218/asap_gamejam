@@ -18,21 +18,34 @@ public class GameManager : Singleton<GameManager>
     private int extraNormalEnemyHealth = 0;
     private float extraNoramlEnemyMoveSpeed = .0f;
     private float extraNoramlEnemyDamage = .0f;
-    
-    
 
+    public int roundStartCount = 0;
+    public bool isStartRound = false;
     public int GetMouseClickCount() => mouseClickCount;
     
     public void AddMouseClickCount()
     {
         mouseClickCount++;
         onMouseClick.Invoke(mouseClickCount);
-        
-        Debug.Log("Click Count : " + mouseClickCount);
     }
-
+    
     public void ResetMouseClickCount()
     {
         mouseClickCount = 0;
+    }
+
+    public void StartRound(UnityAction action)
+    {
+        if (roundStartCount <= mouseClickCount)
+        {
+            Debug.Log(roundStartCount + " : " + mouseClickCount);
+            isStartRound = true;
+            action?.Invoke();
+        }
+    }
+
+    public void StopRound()
+    {
+        isStartRound = false;
     }
 }
