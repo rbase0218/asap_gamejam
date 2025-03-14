@@ -19,4 +19,6 @@ public abstract class UnitBase : GameFramework
     {
         
     }
+    
+    public UnitStatus GetStatus() => _status;
 }

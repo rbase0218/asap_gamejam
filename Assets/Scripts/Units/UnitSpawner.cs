@@ -30,5 +30,6 @@ public class UnitSpawner : GameFramework
         var spawnPoint = _mapManager.GetBaseRandPoint();
         var unitObj = Instantiate(unit, spawnPoint, Quaternion.identity) as GameObject;
         unitObj.transform.parent = unitSpawnObject;
+        unitObj.GetComponent<PlayerUnit>().SetAttackPosition(Vector2.zero);
     }
 }

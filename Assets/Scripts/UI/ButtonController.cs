@@ -41,11 +41,13 @@ public class ButtonController : GameFramework
     public void OnClickSpawnButton()
     {
         _unitSpawner.OnSpawn();
+        GameManager.Instance.AddMouseClickCount();
     }
     
     public void OnClickUpgradeButton()
     {
         Debug.Log("Upgrade Button 클릭");
+        GameManager.Instance.AddMouseClickCount();
     }
 
     public void OnClickMineButton()
@@ -55,17 +57,20 @@ public class ButtonController : GameFramework
         
         _dataManager.SetGold(gold);
         Debug.Log("Mine Button 클릭");
+        GameManager.Instance.AddMouseClickCount();
         
         onClickMineButtonEvent?.Invoke();
     }
     
     public void OnClickFiredoorButton()
     {
+        GameManager.Instance.AddMouseClickCount();
         Debug.Log("FireDoor Button 클릭");
     }
     
     public void OnClickLottoButton()
     {
+        GameManager.Instance.AddMouseClickCount();
         Debug.Log("Lotto Button 클릭");
     }
 }
