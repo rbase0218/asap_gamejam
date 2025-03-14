@@ -1463,7 +1463,7 @@ MonoBehaviour:
   money: 0
   securityGrade: 0
   isFiredoorOpen: 0
-  roundStartCount: 55
+  roundStartCount: 10
   isStartRound: 0
 --- !u!4 &783926602
 Transform:
@@ -2547,7 +2547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7b0c69bd5a88614cad7925b32f254ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <MaxHealth>k__BackingField: 5
+  <MaxHealth>k__BackingField: 3
   <CurrentHealth>k__BackingField: 0
   <DefensePoint>k__BackingField: 0
   <AttackDamage>k__BackingField: 0

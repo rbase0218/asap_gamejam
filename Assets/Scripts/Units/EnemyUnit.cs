@@ -245,7 +245,7 @@ public class EnemyUnit : UnitBase
     }
     
     // 피격 시 처리 로직
-    protected override void OnHit(float damage)
+    public override void OnHit(float damage)
     {
         base.OnHit(damage);
         

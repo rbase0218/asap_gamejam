@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7b0c69bd5a88614cad7925b32f254ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <MaxHealth>k__BackingField: 0
+  <MaxHealth>k__BackingField: 500
   <CurrentHealth>k__BackingField: 0
   <DefensePoint>k__BackingField: 0
   <AttackDamage>k__BackingField: 2

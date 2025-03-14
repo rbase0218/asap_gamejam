@@ -17,7 +17,7 @@ public class Firedoor : UnitBase
     }
     
     // UnitBase에서 상속받은 OnHit 메서드를 오버라이드
-    protected override void OnHit(float damage)
+    public override void OnHit(float damage)
     {
         base.OnHit(damage);
         
@@ -75,8 +75,6 @@ public class Firedoor : UnitBase
         return (float)GetStatus().CurrentHealth / GetStatus().MaxHealth;
     }
     
-    // IDamageable 인터페이스 구현 (EnemyUnit에서 직접 호출 가능하도록)
-    // UnitBase에 이미 OnHit이 있으므로 이 메서드는 OnHit을 호출
     public void TakeDamage(float damage)
     {
         OnHit(damage);

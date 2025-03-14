@@ -15,7 +15,7 @@ public abstract class UnitBase : GameFramework
         unit.OnHit(_status.AttackDamage);
     }
 
-    protected virtual void OnHit(float damage)
+    public virtual void OnHit(float damage)
     {
         
     }

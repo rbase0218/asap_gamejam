@@ -103,11 +103,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7b0c69bd5a88614cad7925b32f254ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <MaxHealth>k__BackingField: 0
+  <MaxHealth>k__BackingField: 500
   <CurrentHealth>k__BackingField: 0
   <DefensePoint>k__BackingField: 0
-  <AttackDamage>k__BackingField: 0
-  <AttackSpeed>k__BackingField: 0
+  <AttackDamage>k__BackingField: 1
+  <AttackSpeed>k__BackingField: 1
   <AttackRange>k__BackingField: 0
   <MoveSpeed>k__BackingField: 5
 --- !u!114 &-3710762414475734347
@@ -124,6 +124,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stoppingDistance: 0.1
   attackRange: 1
+  _projectilePrefab: {fileID: 3348371678796556812, guid: 215f38457c8b1934ab6cd61dc1f026d4, type: 3}
+  _projectileSpawnPoint: {fileID: 0}
+  _attackCooldown: 0
+  _detectionRadius: 5
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!50 &3301973961709740269
 Rigidbody2D:
   serializedVersion: 5
