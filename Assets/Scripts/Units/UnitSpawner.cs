@@ -78,7 +78,6 @@ public class UnitSpawner : GameFramework
             unitObj.transform.position.y
         );
         
-        Debug.Log($"유닛 이동 목표 위치: {targetPosition}");
         playerUnit.SetAttackPosition(targetPosition);
     }
     
@@ -139,7 +138,6 @@ public class UnitSpawner : GameFramework
 
         var spawnPointX = _mapManager.GetEnemySpawnPoint().x;
         var spawnPointY = _mapManager.GetBaseCenterPoint().y;
-        Debug.Log(spawnPointX + " " + spawnPointY);
         var unitObj = Instantiate(unit, new Vector2(spawnPointX, spawnPointY), Quaternion.identity) as GameObject;
         unitObj.transform.parent = enemySpawnObject;
     }

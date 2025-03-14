@@ -64,7 +64,6 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         // 다른 인스턴스가 이미 존재하는지 확인
         if (_instance != null && _instance != this)
         {
-            Debug.LogWarning($"[Singleton] Another instance of {typeof(T)} already exists! Destroying this duplicate.");
             Destroy(gameObject);
             return;
         }
@@ -74,7 +73,6 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         {
             _instance = this as T;
             DontDestroyOnLoad(gameObject);
-            Debug.Log($"[Singleton] {typeof(T)} instance initialized in Awake.");
         }
     }
     

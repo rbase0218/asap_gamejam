@@ -38,7 +38,6 @@ public class GameManager : Singleton<GameManager>
     {
         if (roundStartCount <= mouseClickCount)
         {
-            Debug.Log(roundStartCount + " : " + mouseClickCount);
             isStartRound = true;
             action?.Invoke();
         }
