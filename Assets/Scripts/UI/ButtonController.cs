@@ -48,6 +48,9 @@ public class ButtonController : GameFramework
     
     public void OnClickSpawnButton()
     {
+        if (GameManager.Instance.isStartRound)
+            return;
+        
         _unitSpawner.OnSpawn();
         GameManager.Instance.AddMouseClickCount();
     }
@@ -68,6 +71,9 @@ public class ButtonController : GameFramework
     
     public void OnClickFiredoorButton()
     {
+        if (GameManager.Instance.isStartRound)
+            return;
+        
         GameManager.Instance.AddMouseClickCount();
         Debug.Log("FireDoor Button 클릭");
     }
