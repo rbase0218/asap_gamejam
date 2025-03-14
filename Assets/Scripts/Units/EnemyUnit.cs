@@ -14,11 +14,14 @@ public class EnemyUnit : UnitBase
     [Header("Attack Settings")]
     [SerializeField] private LayerMask _targetLayers; // 공격 가능한 레이어 마스크
     [SerializeField] private string _targetTag = "Unit"; // 공격 가능한 태그들
+    [SerializeField] private float _targetCheckInterval = 0.2f; // 주기적인 타겟 체크 간격
     
     private bool _isAttacking = false; // 공격 중 상태
     private bool _canAttack = true;    // 공격 가능 상태
     private Transform _currentTarget;   // 현재 공격 대상
     private float _attackTimer = 0f;   // 공격 타이머
+    private float _targetCheckTimer = 0f; // 타겟 체크 타이머
+    private bool _hasAttackedTarget = false; // 현재 타겟을 공격했는지 여부
     
     // 이동 및 공격 상태
     private enum EnemyState
@@ -48,12 +51,21 @@ public class EnemyUnit : UnitBase
     {
         base.OnUpdate();
         
+        // 주기적으로 타겟 체크
+        _targetCheckTimer += Time.deltaTime;
+        if (_targetCheckTimer >= _targetCheckInterval)
+        {
+            // 공격 범위 내 타겟 찾기 - 항상 체크하도록 수정
+            FindTargetInRange();
+            _targetCheckTimer = 0f;
+        }
+        
         // 상태에 따른 행동 처리
         switch (_currentState)
         {
             case EnemyState.Moving:
-                // 공격 범위 내 타겟 찾기
-                FindTargetInRange();
+                // 이동 상태일 때는 별도 업데이트 로직 없음
+                // 타겟 체크는 위에서 주기적으로 수행
                 break;
                 
             case EnemyState.Attacking:
@@ -76,6 +88,7 @@ public class EnemyUnit : UnitBase
                 {
                     _currentState = EnemyState.Moving;
                     _currentTarget = null;
+                    _hasAttackedTarget = false; // 타겟을 잃었으므로 플래그 리셋
                 }
                 else if (_canAttack)
                 {
@@ -113,20 +126,6 @@ public class EnemyUnit : UnitBase
         }
     }
     
-    // 충돌 감지 - 트리거 진입 시
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        // 공격 가능한 태그를 가진 대상과 충돌했을 때
-        if (IsValidTarget(other.gameObject))
-        {
-            // 이미 다른 대상을 공격 중이 아니고, 공격 범위 내인지 확인
-            if (_currentState != EnemyState.Attacking && IsTargetInAttackRange(other.transform))
-            {
-                StartAttackingTarget(other.transform);
-            }
-        }
-    }
-    
     // 공격 범위 내에 타겟이 있는지 확인
     private void FindTargetInRange()
     {
@@ -134,7 +133,17 @@ public class EnemyUnit : UnitBase
         float attackRange = GetStatus().AttackRange;
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, attackRange, _targetLayers);
         
-        if (colliders.Length == 0) return;
+        if (colliders.Length == 0)
+        {
+            // 범위 내에 타겟이 없으면 이동 상태로 전환
+            if (_currentState == EnemyState.Attacking)
+            {
+                _currentState = EnemyState.Moving;
+                _currentTarget = null;
+                _hasAttackedTarget = false;
+            }
+            return;
+        }
         
         // 공격 가능한 모든 대상을 거리 순으로 정렬
         var validTargets = new List<Transform>();
@@ -147,14 +156,23 @@ public class EnemyUnit : UnitBase
             }
         }
         
+        // 유효한 타겟이 없으면 리턴
+        if (validTargets.Count == 0) return;
+        
         // 거리순으로 정렬
         validTargets = validTargets.OrderBy(t => 
             Vector2.Distance(transform.position, t.position)).ToList();
         
         // 가장 가까운 타겟이 있으면 공격 시작
-        if (validTargets.Count > 0)
+        // 이미 타겟이 있고 범위 내에 있으면 그 타겟 유지, 아니면 새 타겟 선택
+        Transform newTarget = validTargets[0];
+        
+        // 현재 타겟이 없거나, 범위를 벗어났거나, 파괴되었으면 새 타겟으로 교체
+        if (_currentTarget == null || 
+            !IsTargetInAttackRange(_currentTarget) ||
+            validTargets.Contains(_currentTarget) == false)
         {
-            StartAttackingTarget(validTargets[0]);
+            StartAttackingTarget(newTarget);
         }
     }
     
@@ -169,8 +187,11 @@ public class EnemyUnit : UnitBase
     // 공격 시작
     private void StartAttackingTarget(Transform target)
     {
+        // 타겟 변경
         _currentTarget = target;
         _currentState = EnemyState.Attacking;
+        _hasAttackedTarget = false; // 새로운 타겟이므로 공격 플래그 리셋
+        
         StopMoving(); // 이동 즉시 중지
         
         // 즉시 첫 공격 실행
@@ -204,6 +225,7 @@ public class EnemyUnit : UnitBase
         if (targetUnit != null)
         {
             OnAttack(targetUnit);
+            _hasAttackedTarget = true; // 타겟을 공격했음을 표시
             
             // 공격 시각적 효과 (옵션)
             if (_spriteRenderer != null)
@@ -255,8 +277,8 @@ public class EnemyUnit : UnitBase
     // 디버그용: 공격 범위 시각화
     private void OnDrawGizmosSelected()
     {
-        // 편집기에서만 표시
-        if (!Application.isPlaying && GetStatus() != null)
+        // 공격 범위 시각화
+        if (GetStatus() != null)
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, GetStatus().AttackRange);

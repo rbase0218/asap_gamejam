@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -3576875946379774295}
   m_Layer: 7
   m_Name: BossEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -181,7 +181,7 @@ MonoBehaviour:
   <DefensePoint>k__BackingField: 0
   <AttackDamage>k__BackingField: 2
   <AttackSpeed>k__BackingField: 1
-  <AttackRange>k__BackingField: 2
+  <AttackRange>k__BackingField: 3
   <MoveSpeed>k__BackingField: 3
 --- !u!114 &-3576875946379774295
 MonoBehaviour:
@@ -198,5 +198,6 @@ MonoBehaviour:
   _moveDirection: {x: -1, y: 0}
   _targetLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   _targetTag: Unit
+  _targetCheckInterval: 0.2

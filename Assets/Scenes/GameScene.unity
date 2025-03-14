@@ -2367,7 +2367,7 @@ GameObject:
   - component: {fileID: 1843243550}
   - component: {fileID: 1843243552}
   - component: {fileID: 1843243553}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Firedoor
   m_TagString: Unit
   m_Icon: {fileID: 0}
