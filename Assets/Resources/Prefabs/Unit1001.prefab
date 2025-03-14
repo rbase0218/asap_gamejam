@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -3710762414475734347}
   - component: {fileID: 3301973961709740269}
   - component: {fileID: -48219931725719090}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Unit1001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,6 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stoppingDistance: 0.1
+  attackRange: 0
 --- !u!50 &3301973961709740269
 Rigidbody2D:
   serializedVersion: 5

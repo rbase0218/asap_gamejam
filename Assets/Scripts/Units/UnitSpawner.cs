@@ -4,12 +4,21 @@ public class UnitSpawner : GameFramework
 {
     private int randNum = 0;
     private MapManager _mapManager;
+    private UnitPositionFinder _positionFinder;
 
     [SerializeField] private Transform unitSpawnObject;
-
+    
     protected override void OnAwake()
     {
         _mapManager = GameObject.Find("Map").GetComponent<MapManager>();
+        
+        // UnitPositionFinder 찾기 또는 생성
+        _positionFinder = GetComponent<UnitPositionFinder>();
+        if (_positionFinder == null)
+        {
+            _positionFinder = gameObject.AddComponent<UnitPositionFinder>();
+            Debug.Log("UnitPositionFinder 컴포넌트가 자동으로 추가되었습니다.");
+        }
     }
     
     public void OnSpawn()
@@ -27,27 +36,63 @@ public class UnitSpawner : GameFramework
             return;
         }
         
+        // 기지에서 스폰
         var spawnPoint = _mapManager.GetBaseRandPoint();
         var unitObj = Instantiate(unit, spawnPoint, Quaternion.identity) as GameObject;
         unitObj.transform.parent = unitSpawnObject;
         
         var playerUnit = unitObj.GetComponent<PlayerUnit>();
-        Vector2 range = Vector2.zero;
+        Vector2 rangeBounds = Vector2.zero;
 
+        // 유닛의 공격 범위에 맞는 스폰 구간 설정
         switch (playerUnit.attackRange)
         {
             case UnitAttackRange.Far:
-                range = _mapManager.FarSpawnPoint;
+                rangeBounds = _mapManager.FarSpawnPoint;
                 break;
             case UnitAttackRange.Mid:
-                range = _mapManager.MidSpawnPoint;
+                rangeBounds = _mapManager.MidSpawnPoint;
                 break;
             case UnitAttackRange.Near:
-                range = _mapManager.NearSpawnPoint;
+                rangeBounds = _mapManager.NearSpawnPoint;
                 break;
         }
-        var arrivePoint = new Vector2(Random.Range(range.x, range.y), unitObj.transform.position.y);
-        Debug.Log(arrivePoint);
-        playerUnit.SetAttackPosition(arrivePoint);
+        
+        // 유닛의 스프라이트 크기 가져오기
+        Vector2 unitSize = GetUnitSize(unitObj);
+        
+        // 겹치지 않는 위치 찾기
+        Vector2 targetPosition = _positionFinder.FindNonOverlappingPosition(
+            rangeBounds, 
+            unitSize, 
+            unitObj.transform.position.y
+        );
+        
+        Debug.Log($"유닛 이동 목표 위치: {targetPosition}");
+        playerUnit.SetAttackPosition(targetPosition);
+    }
+    
+    /// <summary>
+    /// 유닛의 크기를 가져옵니다.
+    /// </summary>
+    private Vector2 GetUnitSize(GameObject unitObj)
+    {
+        // 스프라이트 렌더러가 있으면 스프라이트 크기 반환
+        SpriteRenderer spriteRenderer = unitObj.GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null && spriteRenderer.sprite != null)
+        {
+            return spriteRenderer.sprite.bounds.size;
+        }
+        
+        // 스프라이트 렌더러가 없으면 콜라이더 크기 확인
+        Collider2D collider = unitObj.GetComponent<Collider2D>();
+        if (collider != null)
+        {
+            return collider.bounds.size;
+        }
+        
+        // 둘 다 없으면 기본 크기 반환
+        Debug.LogWarning("유닛의 크기를 확인할 수 없습니다. 기본 크기를 사용합니다.");
+        return new Vector2(1f, 1f);
     }
 }

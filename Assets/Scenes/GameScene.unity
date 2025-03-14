@@ -628,8 +628,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c26017fd9087b864fbd7c99f5cec6437, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _registeredUIs: []
-  _uiRoot: {fileID: 0}
 --- !u!4 &303998610
 Transform:
   m_ObjectHideFlags: 0
@@ -1149,11 +1147,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e0a323b4a95ca24998e00c18f215795, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <BaseWidth>k__BackingField: 5
-  <FarWidth>k__BackingField: 6
-  <MidWidth>k__BackingField: 7
-  <NearWidth>k__BackingField: 8
+  <BaseWidth>k__BackingField: 3
+  <FarWidth>k__BackingField: 4
+  <MidWidth>k__BackingField: 3
+  <NearWidth>k__BackingField: 2
   <FiredoorWidth>k__BackingField: 9
+  <FarSpawnPoint>k__BackingField: {x: 0, y: 0}
+  <MidSpawnPoint>k__BackingField: {x: 0, y: 0}
+  <NearSpawnPoint>k__BackingField: {x: 0, y: 0}
 --- !u!114 &534465165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1267,6 +1268,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 888429545}
+  - component: {fileID: 888429546}
   m_Layer: 0
   m_Name: Units
   m_TagString: Untagged
@@ -1289,6 +1291,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1051712109}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &888429546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888429544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31f830d57d505e542821e22a91ce1ef2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rangeSettings: []
+  repositionInterval: 5
+  debugMode: 1
 --- !u!1 &947387453
 GameObject:
   m_ObjectHideFlags: 0
