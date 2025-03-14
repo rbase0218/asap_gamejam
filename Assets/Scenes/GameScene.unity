@@ -1059,6 +1059,7 @@ GameObject:
   - component: {fileID: 534465162}
   - component: {fileID: 534465163}
   - component: {fileID: 534465164}
+  - component: {fileID: 534465165}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -1153,6 +1154,26 @@ MonoBehaviour:
   <MidWidth>k__BackingField: 7
   <NearWidth>k__BackingField: 8
   <FiredoorWidth>k__BackingField: 9
+--- !u!114 &534465165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534465161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fac3b7ed490f2064ba966aeb63fc4aab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapManager: {fileID: 534465164}
+  showVisualization: 1
+  lineHeight: 1
+  baseColor: {r: 0, g: 0, b: 1, a: 1}
+  farColor: {r: 1, g: 0, b: 0, a: 1}
+  midColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  nearColor: {r: 0, g: 1, b: 0, a: 1}
+  firedoorColor: {r: 1, g: 0, b: 1, a: 1}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
