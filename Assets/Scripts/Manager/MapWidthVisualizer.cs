@@ -104,7 +104,7 @@ public class MapWidthVisualizer : MonoBehaviour
         // Firedoor Width
         DrawHorizontalLine(
             minWidth + mapManager.BaseWidth + mapManager.FarWidth + mapManager.MidWidth + mapManager.NearWidth, 
-            maxWidth, 
+            minWidth + mapManager.BaseWidth + mapManager.FarWidth + mapManager.MidWidth + mapManager.NearWidth + mapManager.FiredoorWidth, 
             yPos - lineHeight * 4, 
             firedoorColor,
             "Firedoor"
