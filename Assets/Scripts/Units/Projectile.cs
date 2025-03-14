@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Projectile : GameFramework
@@ -101,7 +102,7 @@ public class Projectile : GameFramework
             transform.rotation = Quaternion.AngleAxis(newAngle, Vector3.forward);
         }
     }
-    
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log("Hit");
