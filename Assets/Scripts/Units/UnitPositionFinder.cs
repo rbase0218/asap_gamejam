@@ -49,11 +49,6 @@ public class UnitPositionFinder : MonoBehaviour
     /// <returns>겹치지 않는 위치</returns>
     public Vector2 FindNonOverlappingPosition(Vector2 rangeBounds, Vector2 unitSize, float yPosition)
     {
-        if (showDebug)
-        {
-            Debug.Log($"범위 내에서 겹치지 않는 위치 찾기: 범위={rangeBounds}, 유닛 크기={unitSize}");
-        }
-
         // 디버그 정보 초기화
         if (showLastAttempts)
         {
@@ -63,7 +58,7 @@ public class UnitPositionFinder : MonoBehaviour
         }
 
         // 충돌 검사에 사용할 박스 크기 (여유를 위해 약간 축소)
-        Vector2 boxSize = new Vector2(unitSize.x * 0.9f, unitSize.y * 0.9f);
+        Vector2 boxSize = new Vector2(unitSize.x * 1.2f, unitSize.y * 1.2f);
         
         for (int attempt = 0; attempt < maxAttempts; attempt++)
         {
@@ -84,16 +79,7 @@ public class UnitPositionFinder : MonoBehaviour
             // 3. 겹치지 않으면 위치 반환
             if (success)
             {
-                if (showDebug)
-                {
-                    Debug.Log($"겹치지 않는 위치 찾음: {testPosition} (시도 횟수: {attempt + 1})");
-                }
                 return testPosition;
-            }
-            
-            if (showDebug && attempt > 0 && attempt % 5 == 0)
-            {
-                Debug.Log($"아직 겹치지 않는 위치를 찾지 못했습니다. 시도 횟수: {attempt + 1}");
             }
         }
         
@@ -106,7 +92,6 @@ public class UnitPositionFinder : MonoBehaviour
             _lastAttempts.Add(new DebugAttempt(fallbackPosition, boxSize, false));
         }
         
-        Debug.LogWarning($"최대 시도 횟수({maxAttempts})를 초과했습니다. 범위 중앙 위치({fallbackPosition})를 반환합니다.");
         return fallbackPosition;
     }
 
@@ -145,11 +130,6 @@ public class UnitPositionFinder : MonoBehaviour
         
         // 충돌하는 유닛이 있으면 true 반환
         bool hasOverlap = colliders != null && colliders.Length > 0;
-        
-        if (showDebug && hasOverlap)
-        {
-            Debug.Log($"위치 {position}에서 {colliders.Length}개의 유닛과 겹칩니다.");
-        }
         
         return hasOverlap;
     }

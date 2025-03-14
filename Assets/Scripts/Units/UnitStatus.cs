@@ -3,9 +3,11 @@ using UnityEngine;
 public class UnitStatus : MonoBehaviour
 {
     // Unit의 Status를 관리하는 Script
-    [field: SerializeField] public float MaxHealth { get; private set; }
-    [field: SerializeField] public float CurrentHealth { get; private set; }
-    [field: SerializeField] public float AttackDamage { get; private set; }
+    [field: SerializeField] public int MaxHealth { get; private set; }
+    [field: SerializeField] public int CurrentHealth { get; private set; }
+    
+    [field: SerializeField] public int DefensePoint { get; private set; }
+    [field: SerializeField] public int AttackDamage { get; private set; }
     [field: SerializeField] public float AttackSpeed { get; private set; }
     [field: SerializeField] public float AttackRange { get; private set; }
     [field: SerializeField] public float MoveSpeed { get; private set; }
@@ -13,6 +15,10 @@ public class UnitStatus : MonoBehaviour
     public void SetHealth(int hp)
     {
         CurrentHealth = hp;
+    }
+    public void SetDefensePoint(int dp)
+    {
+        DefensePoint = dp;
     }
 
     public void SetDamage(int damage)

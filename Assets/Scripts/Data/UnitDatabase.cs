@@ -1,16 +1,21 @@
 using UnityEngine;
 
+
+[System.Serializable]
+public class UnitStatusData
+{
+    public int code;
+    public string name;
+    public UnitGrade grade;
+    public int hp;
+    public int def;
+    public int atk;
+    public float atkSpd;
+    public float atkRange;
+    public float movSpd;
+    public GameObject bulletEff;
+}
 public class UnitDatabase : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public UnitStatusData[] unitStatusData;
 }

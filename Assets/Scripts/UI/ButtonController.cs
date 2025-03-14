@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class ButtonController : GameFramework
 {
-    private DataManager _dataManager;
     private UnitSpawner _unitSpawner;
     
     private Button _spawnButton;
@@ -22,7 +21,6 @@ public class ButtonController : GameFramework
     {
         base.OnAwake();
 
-        _dataManager = GameObject.Find("DataManager").GetComponent<DataManager>();
         _unitSpawner = GameObject.Find("UnitSpawner").GetComponent<UnitSpawner>();
         
         _spawnButton = GameObject.Find("Spawn Button").GetComponent<Button>();
@@ -52,10 +50,6 @@ public class ButtonController : GameFramework
 
     public void OnClickMineButton()
     {
-        float gold = Random.Range(MinGoldRange, MaxGoldRange) + _dataManager.GetGold();
-        gold = Mathf.Round(gold);
-        
-        _dataManager.SetGold(gold);
         Debug.Log("Mine Button 클릭");
         GameManager.Instance.AddMouseClickCount();
         
