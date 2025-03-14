@@ -763,7 +763,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxEnemyCode: 1101
-  maxUnitCode: 1002
+  maxUnitCode: 1012
   unitSpawnObject: {fileID: 888429545}
   enemySpawnObject: {fileID: 1198441659}
 --- !u!4 &471377172
@@ -1463,7 +1463,7 @@ MonoBehaviour:
   money: 0
   securityGrade: 0
   isFiredoorOpen: 0
-  roundStartCount: 3
+  roundStartCount: 55
   isStartRound: 0
 --- !u!4 &783926602
 Transform:

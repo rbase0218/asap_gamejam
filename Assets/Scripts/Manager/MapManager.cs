@@ -59,7 +59,7 @@ public class MapManager : GameFramework
     {
         var basePointX = _minWidth + (BaseWidth / 2);
         
-        var minRandY = transform.position.y - ((_render.sprite.bounds.size.y * transform.localScale.y) / 2);
+        var minRandY = transform.position.y - ((_render.sprite.bounds.size.y * transform.localScale.y) / 2) + 0.2f;
         var maxRandY = transform.position.y + ((_render.sprite.bounds.size.y * transform.localScale.y) / 2);
         var basePointY = Random.Range(minRandY, maxRandY);
         return new Vector2(basePointX, basePointY);
@@ -69,7 +69,7 @@ public class MapManager : GameFramework
     {
         var enemyPointX = EnemySpawnPoint.x;
         
-        var minRandY = transform.position.y - ((_render.sprite.bounds.size.y * transform.localScale.y) / 2);
+        var minRandY = transform.position.y - ((_render.sprite.bounds.size.y * transform.localScale.y) / 2) + 0.2f;
         var maxRandY = transform.position.y + ((_render.sprite.bounds.size.y * transform.localScale.y) / 2);
         var basePointY = Random.Range(minRandY, maxRandY);
         return new Vector2(enemyPointX, basePointY);
