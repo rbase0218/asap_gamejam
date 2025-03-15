@@ -226,15 +226,6 @@ public class EnemyUnit : UnitBase
         {
             OnAttack(targetUnit);
             _hasAttackedTarget = true; // 타겟을 공격했음을 표시
-            
-            // 공격 시각적 효과 (옵션)
-            if (_spriteRenderer != null)
-            {
-                Color originalColor = _spriteRenderer.color;
-                _spriteRenderer.color = Color.red;
-                yield return new WaitForSeconds(0.1f);
-                _spriteRenderer.color = originalColor;
-            }
         }
         
         // 공격 후 짧은 딜레이
@@ -272,16 +263,5 @@ public class EnemyUnit : UnitBase
     {
         // 오브젝트 제거
         Destroy(gameObject);
-    }
-    
-    // 디버그용: 공격 범위 시각화
-    private void OnDrawGizmosSelected()
-    {
-        // 공격 범위 시각화
-        if (GetStatus() != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, GetStatus().AttackRange);
-        }
     }
 }
