@@ -50,8 +50,16 @@ public class ButtonController : GameFramework
     {
         if (GameManager.Instance.isStartRound)
             return;
+
+        var currMoney = GameManager.Instance.GetMoney();
+        var needMoney = GameManager.Instance.needMoneyToSpawn;
         
+        if(currMoney < needMoney)
+            return;
+        
+        GameManager.Instance.AddMoney(-needMoney);
         _unitSpawner.OnSpawn();
+        
         GameManager.Instance.AddMouseClickCount();
     }
     
@@ -64,6 +72,8 @@ public class ButtonController : GameFramework
     public void OnClickMineButton()
     {
         Debug.Log("Mine Button 클릭");
+        
+        GameManager.Instance.AddMoney();
         GameManager.Instance.AddMouseClickCount();
         
         onClickMineButtonEvent?.Invoke();

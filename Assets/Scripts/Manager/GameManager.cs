@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,6 +11,13 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private int money = 0;
     [SerializeField] private int securityGrade = 0;
     [SerializeField] private bool isFiredoorOpen = false;
+
+    [Header("Mining - Money")]
+    [SerializeField] private int miningMinMoney = 0;
+    [SerializeField] private int miningMaxMoney = 0;
+
+    [Header("Spawn Money")]
+    public int needMoneyToSpawn = 0;
 
     private float extraBossDamage = .0f;
     private int extraBossHealth = 0;
@@ -46,5 +54,18 @@ public class GameManager : Singleton<GameManager>
     public void StopRound()
     {
         isStartRound = false;
+    }
+
+    public int GetMoney() => money;
+
+    public void AddMoney()
+    {
+        var result = Random.Range(miningMinMoney, miningMaxMoney);
+        money += result;
+    }
+    
+    public void AddMoney(int value)
+    {
+        money += value;
     }
 }
