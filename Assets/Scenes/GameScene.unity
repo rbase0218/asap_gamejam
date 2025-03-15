@@ -762,7 +762,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdbdff54bbb5ee54a8a9aa9b313b5608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxEnemyCode: 1101
+  maxEnemyCode: 2002
   maxUnitCode: 1012
   unitSpawnObject: {fileID: 888429545}
   enemySpawnObject: {fileID: 1198441659}

@@ -8,14 +8,6 @@ public class Firedoor : UnitBase
     [SerializeField] private UnityEvent<float> onDamaged;
     [SerializeField] private UnityEvent onDestroyed;
     
-    protected override void OnStart()
-    {
-        base.OnStart();
-        
-        // 시작 시 최대 체력으로 설정
-        GetStatus().SetHealth(GetStatus().MaxHealth);
-    }
-    
     // UnitBase에서 상속받은 OnHit 메서드를 오버라이드
     public override void OnHit(float damage)
     {

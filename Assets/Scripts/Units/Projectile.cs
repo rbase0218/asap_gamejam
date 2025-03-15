@@ -105,7 +105,6 @@ public class Projectile : GameFramework
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Hit");
         if (_hasHit) return;
         
         if (other.CompareTag("Enemy"))
@@ -122,7 +121,6 @@ public class Projectile : GameFramework
             {
                 Instantiate(_hitEffect, transform.position, Quaternion.identity);
             }
-            Debug.Log("투사체 명중");
             Destroy(gameObject);
         }
     }

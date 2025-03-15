@@ -113,7 +113,7 @@ public class UnitSpawner : GameFramework
     }
     private void SpawnEnemyUnit()
     {
-        var randCode = Random.Range(1101, maxEnemyCode + 1);
+        var randCode = Random.Range(2001, maxEnemyCode + 1);
         var unit = Resources.Load($"Prefabs/Enemy{randCode.ToString()}");
         
         if (unit == null)
