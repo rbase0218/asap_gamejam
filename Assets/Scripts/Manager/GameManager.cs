@@ -18,6 +18,9 @@ public class GameManager : Singleton<GameManager>
 
     [Header("Spawn Money")]
     public int needMoneyToSpawn = 0;
+    
+    [Header("Firedoor Repair")]
+    public int needMoneyToFiredoorRepair = 0;
 
     private float extraBossDamage = .0f;
     private int extraBossHealth = 0;

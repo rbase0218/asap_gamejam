@@ -17,6 +17,8 @@ public class ButtonController : GameFramework
     [field:SerializeField] public float MinGoldRange { get; private set; }
     [field:SerializeField] public float MaxGoldRange { get; private set; }
 
+    [SerializeField] private UnitBase firedoor;
+
     
     public UnityEvent onClickMineButtonEvent;
     protected override void OnAwake()
@@ -83,6 +85,15 @@ public class ButtonController : GameFramework
     {
         if (GameManager.Instance.isStartRound)
             return;
+        
+        var currMoney = GameManager.Instance.GetMoney();
+        var needMoney = GameManager.Instance.needMoneyToFiredoorRepair;
+        
+        if(currMoney < needMoney)
+            return;
+        
+        GameManager.Instance.AddMoney(-needMoney);
+        firedoor.GetStatus().SetFullHealth();
         
         GameManager.Instance.AddMouseClickCount();
         Debug.Log("FireDoor Button 클릭");
