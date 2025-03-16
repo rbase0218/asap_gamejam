@@ -39,7 +39,18 @@ public class UnitSpawner : GameFramework
         SpawnPlayerUnit();
     }
     
-    private void SpawnPlayerUnit(int code = -1)
+    public void CleanAllUnits()
+    {
+        StopEnemySpawn();
+        _unitManager.RemoveAllUnits();
+    }
+    
+    public void OnSpawn(int code, Vector2 pos)
+    {
+        SpawnPlayerUnit(code, pos);
+    }
+    
+    private void SpawnPlayerUnit(int code = -1, Vector2 pos = default(Vector2))
     {
         // 랜덤으로 유닛을 생성한다.
         var randCode = (code == -1) ? Random.Range(1001, maxUnitCode + 1) : code;
@@ -51,7 +62,7 @@ public class UnitSpawner : GameFramework
         }
         
         // 기지에서 스폰
-        var spawnPoint = _mapManager.GetBaseRandPoint();
+        var spawnPoint = (pos == default(Vector2)) ? _mapManager.GetBaseRandPoint() : pos;
         var unitObj = Instantiate(unit, spawnPoint, Quaternion.identity) as GameObject;
         unitObj.transform.parent = unitSpawnObject;
         
@@ -59,31 +70,29 @@ public class UnitSpawner : GameFramework
         playerUnit.GetStatus().SetUnitCode(randCode);
         Vector2 rangeBounds = Vector2.zero;
 
-        // 유닛의 공격 범위에 맞는 스폰 구간 설정
-        switch (playerUnit.attackRange)
+        if (pos == default(Vector2))
         {
-            case UnitAttackRange.Far:
-                rangeBounds = _mapManager.FarSpawnPoint;
-                break;
-            case UnitAttackRange.Mid:
-                rangeBounds = _mapManager.MidSpawnPoint;
-                break;
-            case UnitAttackRange.Near:
-                rangeBounds = _mapManager.NearSpawnPoint;
-                break;
+            // 유닛의 공격 범위에 맞는 스폰 구간 설정
+            switch (playerUnit.attackRange)
+            {
+                case UnitAttackRange.Far:
+                    rangeBounds = _mapManager.FarSpawnPoint;
+                    break;
+                case UnitAttackRange.Mid:
+                    rangeBounds = _mapManager.MidSpawnPoint;
+                    break;
+                case UnitAttackRange.Near:
+                    rangeBounds = _mapManager.NearSpawnPoint;
+                    break;
+            }
+
+            // 유닛의 스프라이트 크기 가져오기
+            Vector2 unitSize = GetUnitSize(unitObj);
+
+            // 겹치지 않는 위치 찾기
+            Vector2 targetPosition = _positionFinder.FindNonOverlappingPosition(rangeBounds, unitSize, unitObj.transform.position.y);
+            playerUnit.SetAttackPosition(targetPosition);
         }
-        
-        // 유닛의 스프라이트 크기 가져오기
-        Vector2 unitSize = GetUnitSize(unitObj);
-        
-        // 겹치지 않는 위치 찾기
-        Vector2 targetPosition = _positionFinder.FindNonOverlappingPosition(
-            rangeBounds, 
-            unitSize, 
-            unitObj.transform.position.y
-        );
-        
-        playerUnit.SetAttackPosition(targetPosition);
         _unitManager.AddPlayerUnit(playerUnit);
     }
     
@@ -122,6 +131,12 @@ public class UnitSpawner : GameFramework
         if (_spawnCoroutine != null) return;
         _spawnCoroutine = StartCoroutine(StartSpawnUnit());
     }
+
+    public void StopEnemySpawn()
+    {
+        StopCoroutine(_spawnCoroutine);
+        _spawnCoroutine = null;
+    }
     private void SpawnEnemyUnit()
     {
         var randCode = Random.Range(2001, maxEnemyCode + 1);
@@ -143,7 +158,7 @@ public class UnitSpawner : GameFramework
         
         _unitManager.AddEnemyUnit(enemyUnit);
     }
-
+    
     private void SpawnBossUnit()
     {
         var unit = Resources.Load("Prefabs/BossEnemy");

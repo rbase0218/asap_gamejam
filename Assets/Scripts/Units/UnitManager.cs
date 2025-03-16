@@ -40,8 +40,12 @@ public class UnitManager : MonoBehaviour
         }
         foreach (var unit in enemyList)
         {
+            playerList.Remove(unit);
             Destroy(unit.gameObject);
         }
+        
+        playerList.Clear();
+        enemyList.Clear();
     }
     
     public void RemoveEnemyUnit(UnitBase unit)

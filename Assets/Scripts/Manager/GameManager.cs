@@ -87,4 +87,13 @@ public class GameManager : Singleton<GameManager>
     {
         userData.money += value;
     }
+
+    public void StartBackup()
+    {
+        userData.money = saveMoney;
+        AddMoney();
+        isEnemySpawning = false;
+        isStartRound = false;
+        mouseClickCount = 0;
+    }
 }
