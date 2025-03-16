@@ -103,10 +103,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7b0c69bd5a88614cad7925b32f254ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <UnitCode>k__BackingField: 0
   <MaxHealth>k__BackingField: 500
   <CurrentHealth>k__BackingField: 0
   <DefensePoint>k__BackingField: 0
-  <AttackDamage>k__BackingField: 1
+  <AttackDamage>k__BackingField: 500
   <AttackSpeed>k__BackingField: 1
   <AttackRange>k__BackingField: 0
   <MoveSpeed>k__BackingField: 5
@@ -196,7 +197,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.1875, y: 1.3125}
+    oldSize: {x: 0.39583334, y: 0.4375}
     newSize: {x: 1.1875, y: 1.3125}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

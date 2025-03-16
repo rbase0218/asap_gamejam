@@ -4,13 +4,12 @@ using UnityEngine.Events;
 
 public class GameManager : Singleton<GameManager>
 {
-    [SerializeField] private int mouseClickCount = 0;
-    
     public UnityEvent<int> onMouseClick = new UnityEvent<int>();
 
-    [SerializeField] private int money = 0;
-    [SerializeField] private int securityGrade = 0;
-    [SerializeField] private bool isFiredoorOpen = false;
+    [SerializeField] private int mouseClickCount = 0;
+    
+    public UserData userData;
+    private UserData saveData = new UserData();
 
     [Header("Mining - Money")]
     [SerializeField] private int miningMinMoney = 0;
@@ -22,16 +21,14 @@ public class GameManager : Singleton<GameManager>
     [Header("Firedoor Repair")]
     public int needMoneyToFiredoorRepair = 0;
 
-    private float extraBossDamage = .0f;
-    private int extraBossHealth = 0;
-    private int extraBoosDefense = 0;
-    
-    private int extraNormalEnemyHealth = 0;
-    private float extraNoramlEnemyMoveSpeed = .0f;
-    private float extraNoramlEnemyDamage = .0f;
-
+    [Header("Round Control")]
     public int roundStartCount = 0;
     public bool isStartRound = false;
+    public bool isEnemySpawning = false;
+
+
+    private int saveMoney = 0;
+    
     public int GetMouseClickCount() => mouseClickCount;
     
     public void AddMouseClickCount()
@@ -50,25 +47,44 @@ public class GameManager : Singleton<GameManager>
         if (roundStartCount <= mouseClickCount)
         {
             isStartRound = true;
+            SaveRoundData();
+
             action?.Invoke();
         }
     }
-
-    public void StopRound()
+    
+    public void SaveRoundData()
     {
-        isStartRound = false;
+        saveData.money = userData.money;
+        saveData.roundCount = userData.roundCount;
+        saveData.unitDataList = userData.unitDataList;
     }
 
-    public int GetMoney() => money;
+    public void ClearUnitData() => userData?.unitDataList.Clear();
+
+    public void AddUnitData(UnitData data)
+    {
+        userData?.unitDataList.Add(data);
+    }
+
+    public void StopRound(UnityAction action)
+    {
+        isStartRound = false;
+        mouseClickCount = 0;
+        action?.Invoke();
+        saveMoney = GetMoney();
+    }
+
+    public int GetMoney() => userData.money;
 
     public void AddMoney()
     {
         var result = Random.Range(miningMinMoney, miningMaxMoney);
-        money += result;
+        userData.money += result;
     }
     
     public void AddMoney(int value)
     {
-        money += value;
+        userData.money += value;
     }
 }

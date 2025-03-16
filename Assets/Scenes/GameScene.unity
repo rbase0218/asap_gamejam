@@ -743,6 +743,7 @@ GameObject:
   - component: {fileID: 471377171}
   - component: {fileID: 471377173}
   - component: {fileID: 471377174}
+  - component: {fileID: 471377175}
   m_Layer: 0
   m_Name: UnitSpawner
   m_TagString: Untagged
@@ -816,6 +817,20 @@ MonoBehaviour:
   failColor: {r: 1, g: 0, b: 0, a: 1}
   boundaryColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   debugDuration: 3
+--- !u!114 &471377175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471377170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 226dcc281b728c24c964bd60f7f120dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyList: []
+  playerList: []
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1481,13 +1496,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ab2c841ecfd8ba4e833532ff66a84e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseClickCount: 0
   onMouseClick:
     m_PersistentCalls:
       m_Calls: []
-  money: 0
-  securityGrade: 0
-  isFiredoorOpen: 0
+  mouseClickCount: 0
+  userData:
+    money: 0
+    roundCount: 0
+    extraBossDamage: 0
+    extraBossHealth: 0
+    extraBoosDefense: 0
+    extraNormalEnemyHealth: 1
+    extraNormalEnemyMoveSpeed: 1
+    extraNormalEnemyDamage: 1
+    unitDataList: []
   miningMinMoney: 0
   miningMaxMoney: 0
   needMoneyToSpawn: 0
@@ -2578,6 +2600,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7b0c69bd5a88614cad7925b32f254ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <UnitCode>k__BackingField: 0
   <MaxHealth>k__BackingField: 3
   <CurrentHealth>k__BackingField: 0
   <DefensePoint>k__BackingField: 0
@@ -2633,6 +2656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7b0c69bd5a88614cad7925b32f254ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <UnitCode>k__BackingField: 0
   <MaxHealth>k__BackingField: 3
   <CurrentHealth>k__BackingField: 0
   <DefensePoint>k__BackingField: 0

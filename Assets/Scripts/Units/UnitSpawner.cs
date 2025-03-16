@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 public class UnitSpawner : GameFramework
@@ -12,9 +13,12 @@ public class UnitSpawner : GameFramework
     [SerializeField] private Transform unitSpawnObject;
     [SerializeField] private Transform enemySpawnObject;
 
+    private UnitManager _unitManager;
+
     protected override void OnAwake()
     {
         _mapManager = GameObject.Find("Map").GetComponent<MapManager>();
+        _unitManager = GetComponent<UnitManager>();
         
         // UnitPositionFinder 찾기 또는 생성
         _positionFinder = GetComponent<UnitPositionFinder>();
@@ -26,7 +30,7 @@ public class UnitSpawner : GameFramework
         
         GameManager.Instance.onMouseClick.AddListener((x) =>
         {
-            GameManager.Instance.StartRound(OnSpawnWithEnemy);
+            GameManager.Instance.StartRound(OnStartRound);
         });
     }
     
@@ -35,10 +39,10 @@ public class UnitSpawner : GameFramework
         SpawnPlayerUnit();
     }
     
-    private void SpawnPlayerUnit()
+    private void SpawnPlayerUnit(int code = -1)
     {
         // 랜덤으로 유닛을 생성한다.
-        var randCode = Random.Range(1001, maxUnitCode + 1);
+        var randCode = (code == -1) ? Random.Range(1001, maxUnitCode + 1) : code;
         var unit = Resources.Load($"Prefabs/Unit{randCode.ToString()}");
         if (unit == null)
         {
@@ -52,6 +56,7 @@ public class UnitSpawner : GameFramework
         unitObj.transform.parent = unitSpawnObject;
         
         var playerUnit = unitObj.GetComponent<PlayerUnit>();
+        playerUnit.GetStatus().SetUnitCode(randCode);
         Vector2 rangeBounds = Vector2.zero;
 
         // 유닛의 공격 범위에 맞는 스폰 구간 설정
@@ -79,6 +84,7 @@ public class UnitSpawner : GameFramework
         );
         
         playerUnit.SetAttackPosition(targetPosition);
+        _unitManager.AddPlayerUnit(playerUnit);
     }
     
     /// <summary>
@@ -105,6 +111,11 @@ public class UnitSpawner : GameFramework
         return new Vector2(1f, 1f);
     }
 
+    public void OnStartRound()
+    {
+        OnSpawnWithEnemy();
+    }
+
     Coroutine _spawnCoroutine;
     public void OnSpawnWithEnemy()
     {
@@ -125,6 +136,12 @@ public class UnitSpawner : GameFramework
         var spawnPoint = _mapManager.GetEnemySpawnPoint();
         var unitObj = Instantiate(unit, spawnPoint, Quaternion.identity) as GameObject;
         unitObj.transform.parent = enemySpawnObject;
+        
+        var enemyUnit = unitObj.GetComponent<EnemyUnit>();
+        enemyUnit.GetStatus().SetUnitCode(randCode);
+        enemyUnit.Initialize(_unitManager);
+        
+        _unitManager.AddEnemyUnit(enemyUnit);
     }
 
     private void SpawnBossUnit()
@@ -140,16 +157,24 @@ public class UnitSpawner : GameFramework
         var spawnPointY = _mapManager.GetBaseCenterPoint().y;
         var unitObj = Instantiate(unit, new Vector2(spawnPointX, spawnPointY), Quaternion.identity) as GameObject;
         unitObj.transform.parent = enemySpawnObject;
+        
+        var enemyUnit = unitObj.GetComponent<EnemyUnit>();
+        enemyUnit.Initialize(_unitManager);
     }
 
     private IEnumerator StartSpawnUnit()
     {
+        GameManager.Instance.isEnemySpawning = true;
         SpawnBossUnit();
         
-        for (int i = 0; i < 10; ++i)
+        for (int i = 0; i < 11; ++i)
         {
             SpawnEnemyUnit();
             float randNum = Random.Range(0.5f, 2.1f);
+
+            if (i == 10)
+                GameManager.Instance.isEnemySpawning = false;
+            
             yield return new WaitForSeconds(randNum);
         }
         

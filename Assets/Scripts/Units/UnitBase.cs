@@ -10,9 +10,12 @@ public abstract class UnitBase : GameFramework
         TryGetComponent(out _status);
     }
 
-    protected virtual void OnAttack(UnitBase unit)
+    protected virtual void OnAttack(UnitBase unit, float damage = -1f)
     {
-        unit.OnHit(_status.AttackDamage);
+        if(damage < 0f)
+            unit.OnHit(_status.AttackDamage);
+        else
+            unit.OnHit(damage);
     }
 
     public virtual void OnHit(float damage)

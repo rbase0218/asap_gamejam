@@ -3,6 +3,7 @@ using UnityEngine;
 public class UnitStatus : GameFramework
 {
     // Unit의 Status를 관리하는 Script
+    [field:SerializeField] public int UnitCode { get; private set; }
     [field: SerializeField] public int MaxHealth { get; private set; }
     [field: SerializeField] public int CurrentHealth { get; private set; }
     
@@ -51,5 +52,10 @@ public class UnitStatus : GameFramework
     public void SetMoveSpeed(float speed)
     {
         MoveSpeed = speed;
+    }
+
+    public void SetUnitCode(int code)
+    {
+        UnitCode = code;
     }
 }

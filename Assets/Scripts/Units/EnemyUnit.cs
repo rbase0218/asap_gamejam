@@ -23,6 +23,8 @@ public class EnemyUnit : UnitBase
     private float _targetCheckTimer = 0f; // 타겟 체크 타이머
     private bool _hasAttackedTarget = false; // 현재 타겟을 공격했는지 여부
     
+    private UnitManager _unitManager;
+    
     // 이동 및 공격 상태
     private enum EnemyState
     {
@@ -109,10 +111,15 @@ public class EnemyUnit : UnitBase
             MoveEnemy();
         }
     }
+
+    public void Initialize(UnitManager unit)
+    {
+        _unitManager = unit;
+    }
     
     private void MoveEnemy()
     {
-        float speed = GetStatus().MoveSpeed;
+        float speed = GetStatus().MoveSpeed * GameManager.Instance.userData.extraNormalEnemyMoveSpeed;
         _rig.linearVelocity = _moveDirection.normalized * speed;
     }
     
@@ -224,7 +231,7 @@ public class EnemyUnit : UnitBase
         UnitBase targetUnit = _currentTarget.GetComponent<UnitBase>();
         if (targetUnit != null)
         {
-            OnAttack(targetUnit);
+            OnAttack(targetUnit, GetStatus().AttackDamage * GameManager.Instance.userData.extraNormalEnemyDamage);
             _hasAttackedTarget = true; // 타겟을 공격했음을 표시
         }
         
@@ -241,7 +248,7 @@ public class EnemyUnit : UnitBase
         base.OnHit(damage);
         
         // 현재 체력 감소
-        int currentHealth = GetStatus().CurrentHealth;
+        int currentHealth = GetStatus().CurrentHealth * GameManager.Instance.userData.extraNormalEnemyHealth;
         int defensePoint = GetStatus().DefensePoint;
         
         // 방어력을 고려한 데미지 계산
@@ -261,7 +268,6 @@ public class EnemyUnit : UnitBase
     // 사망 처리
     private void Die()
     {
-        // 오브젝트 제거
-        Destroy(gameObject);
+        _unitManager?.RemoveEnemyUnit(this);
     }
 }
